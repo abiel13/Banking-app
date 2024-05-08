@@ -1,10 +1,11 @@
+import AuthForm from '@/components/AuthForm'
 import React from 'react'
 
 const Signup = () => {
   return (
-    <div>
-      
-    </div>
+    <section className='flex justify-center items-center px-4 py-4   overflow-x-hidden  min-h-screen'>
+    <AuthForm type='signup' />
+  </section>
   )
 }
 

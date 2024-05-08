@@ -25,12 +25,12 @@ const MobileNav = () => {
       <SheetContent>
         <SheetClose asChild>
           <div>
-            <div>
+            <Link href={'/'}>
               <div className="relative w-[70px] h-[70px] ">
                 <Image src={"/logo.png"} alt="logo " fill />
               </div>{" "}
               <span className="font-bold ">A-bank</span>
-            </div>
+            </Link>
 
             <div className="flex-col flex gap-3 mt-4">
               {Navlinks.map((item, i) => {

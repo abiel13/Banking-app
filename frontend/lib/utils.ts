@@ -1,5 +1,6 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
+import { z } from "zod";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -17,3 +18,18 @@ export function formatNumberToUSD(number: number): string {
 
   return formattedNumber;
 }
+
+export const authSchema = (type: "signin" | "signup") =>
+  z.object({
+    firstname: type == "signin" ? z.string().optional() : z.string(),
+    lastname: type == "signin" ? z.string().optional() : z.string(),
+    address: type == "signin" ? z.string().optional() : z.string(),
+    postalCode: type == "signin" ? z.string().optional() : z.string(),
+    state: type == "signin" ? z.string().optional() : z.string(),
+    dateOfBirth: type == "signin"  ? z.string().optional() : z.string(),
+    ssn: type == "signin" ? z.string().optional() : z.string(),
+
+    //sign in
+    email: z.string().email(),
+    password: z.string().min(8),
+  });

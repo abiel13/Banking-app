@@ -11,12 +11,12 @@ const Sidebar = () => {
 
   return (
     <div className="sticky top-0 h-screen left-0 w-fit  xl:w-[15%]  border-r border-muted px-3 py-4 hidden md:flex flex-col">
-      <div className="flex items-center">
-        <div className="relative w-[70px] h-[70px] lg:w-[80px] lg:h-[80px]">
+      <Link className="flex items-center" href={"/"}>
+        <div className="relative w-[70px] h-[70px] ">
           <Image src={"/logo.png"} alt="logo " fill />
         </div>{" "}
-        <span className="font-bold xl:block hidden">A-bank</span>
-      </div>
+        <span className="font-bold ">A-bank</span>
+      </Link>
 
       <div className="flex-col flex gap-3 mt-4">
         {Navlinks.map((item, i) => {
@@ -26,9 +26,12 @@ const Sidebar = () => {
             <Link
               key={i}
               href={item.route}
-              className={cn("flex items-center gap-3 justify-center xl:justify-normal px-2 py-2 rounded-lg", {
-                "bg-primary": isActive,
-              })}
+              className={cn(
+                "flex items-center gap-3 justify-center lg:justify-normal px-2 py-2 rounded-lg",
+                {
+                  "bg-primary": isActive,
+                }
+              )}
             >
               <item.Icon
                 fontSize={23}
