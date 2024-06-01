@@ -7,18 +7,7 @@ declare type SearchParamProps = {
   
   // ========================================
   
-  declare type SignUpParams = {
-    firstName: string;
-    lastName: string;
-    address1: string;
-    city: string;
-    state: string;
-    postalCode: string;
-    dateOfBirth: string;
-    ssn: string;
-    email: string;
-    password: string;
-  };
+  
   
   declare type LoginUser = {
     email: string;
@@ -155,10 +144,7 @@ declare type SearchParamProps = {
     user?: string;
   }
   
-  declare interface MobileNavProps {
-    user: User;
-  }
-  
+ 
   declare interface PageHeaderProps {
     topTitle: string;
     bottomTitle: string;
@@ -208,10 +194,7 @@ declare type SearchParamProps = {
     totalCurrentBalance: number;
   }
   
-  declare interface FooterProps {
-    user: User;
-    type?: 'mobile' | 'desktop'
-  }
+ 
   
   declare interface RightSidebarProps {
     user: User;
@@ -219,9 +202,6 @@ declare type SearchParamProps = {
     banks: Bank[] & Account[];
   }
   
-  declare interface SiderbarProps {
-    user: User;
-  }
   
   declare interface RecentTransactionsProps {
     accounts: Account[];

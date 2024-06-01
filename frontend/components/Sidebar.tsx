@@ -5,9 +5,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
+import Footer from "./Footer";
 
-const Sidebar = () => {
+const Sidebar = ({user} : SiderbarProps) => {
   const pathname = usePathname();
+
 
   return (
     <div className="sticky top-0 h-screen left-0 w-fit  xl:w-[15%]  border-r border-muted px-3 py-4 hidden md:flex flex-col">
@@ -18,7 +20,7 @@ const Sidebar = () => {
         <span className="font-bold ">A-bank</span>
       </Link>
 
-      <div className="flex-col flex gap-3 mt-4">
+      <div className="flex-col flex gap-3 mt-4 flex-1">
         {Navlinks.map((item, i) => {
           const isActive =
             pathname === item.route || pathname.startsWith(`${item.route}/`);
@@ -51,6 +53,8 @@ const Sidebar = () => {
           );
         })}
       </div>
+
+     <Footer user={user} />
     </div>
   );
 };

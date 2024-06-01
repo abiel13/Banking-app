@@ -20,9 +20,13 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { authSchema } from "@/lib/utils";
 import CustomInput from "./CustomInput";
+import { signin, signup } from "@/lib/actions/user.actions";
+import { useRouter } from "next/navigation";
 
 const AuthForm = ({ type }: { type: "signin" | "signup" }) => {
   const [user, setuser] = useState();
+  const [loading, setLoading] = useState(false);
+  const router = useRouter()
 
   const formSchema = authSchema(type);
 
@@ -34,8 +38,28 @@ const AuthForm = ({ type }: { type: "signin" | "signup" }) => {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+  async function onSubmit(data: z.infer<typeof formSchema>) {
+    // console.log(data);
+    try {
+      setLoading(true);
+      if (type == "signup") {
+        const newUser = await signup(data);
+
+        setuser(newUser);
+        setLoading(false);
+      }
+
+      if (type == "signin") {
+        const response = await signin({
+          email: data.email,
+          password: data.password,
+        });
+        if(response) router.push('/')
+      }
+    } catch (error) {
+      console.log(error);
+      
+    }
   }
 
   return (
@@ -70,20 +94,20 @@ const AuthForm = ({ type }: { type: "signin" | "signup" }) => {
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(onSubmit)}
-                className="flex flex-col gap-6 my-5 "
+                className="flex flex-col gap-3 my-5 "
               >
                 {type == "signup" && (
                   <>
                     <div className="flex items-center gap-3">
                       <CustomInput
-                        name="firstname"
+                        name="firstName"
                         control={form.control}
                         placeholder="enter your firstname"
                         type="text"
                         description="input you firstname"
                       />{" "}
                       <CustomInput
-                        name="lastname"
+                        name="lastName"
                         control={form.control}
                         placeholder="enter your lastname"
                         type="text"
@@ -115,6 +139,24 @@ const AuthForm = ({ type }: { type: "signin" | "signup" }) => {
                         description="input you ssn"
                       />{" "}
                     </div>
+                    <div className="flex item-center gap-3 w-full">
+                      <CustomInput
+                        name="postalCode"
+                        label="Postal Code"
+                        control={form.control}
+                        placeholder="enter your postalCode"
+                        type="text"
+                        description="input you postalCode"
+                      />{" "}
+                      <CustomInput
+                        name="state"
+                        control={form.control}
+                        label="state"
+                        placeholder="enter your state "
+                        type="text"
+                        description="input you ssn"
+                      />{" "}
+                    </div>
                   </>
                 )}
                 <CustomInput
@@ -132,10 +174,9 @@ const AuthForm = ({ type }: { type: "signin" | "signup" }) => {
                   description="password must contain more than 8 chars"
                 />
                 <Button className="px-6 w-fit" type="submit">
-                  Submit
+                  {loading ? "Loading " : "Submit"}
                 </Button>
               </form>
-              dbestabi28@gmail.com
             </Form>
           )}
         </div>
@@ -151,8 +192,8 @@ const AuthForm = ({ type }: { type: "signin" | "signup" }) => {
           )}
         </div>
       </div>
-      <div className="flex-1 relative w-full h-full hidden md:block">
-        {/* <Image src={"/logo.png"} alt="" fill /> */}
+      <div className="flex-1 relative w-full h-full hidden md:block ">
+        <Image className="object-contain" src={"/demo.png"} alt="demo" fill />
       </div>
     </section>
   );

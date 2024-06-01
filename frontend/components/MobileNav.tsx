@@ -13,8 +13,9 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Navlinks } from "@/constants/sidenavlinks";
 import Image from "next/image";
+import Footer from "./Footer";
 
-const MobileNav = () => {
+const MobileNav = ({ user }: MobileNavProps) => {
   const pathname = usePathname();
 
   return (
@@ -24,15 +25,15 @@ const MobileNav = () => {
       </SheetTrigger>
       <SheetContent>
         <SheetClose asChild>
-          <div>
-            <Link href={'/'}>
+          <div className=" ">
+            <Link href={"/"}>
               <div className="relative w-[70px] h-[70px] ">
                 <Image src={"/logo.png"} alt="logo " fill />
               </div>{" "}
               <span className="font-bold ">A-bank</span>
             </Link>
 
-            <div className="flex-col flex gap-3 mt-4">
+            <div className="flex-col flex gap-3 mt-4 flex-1">
               {Navlinks.map((item, i) => {
                 const isActive =
                   pathname === item.route ||
@@ -66,6 +67,9 @@ const MobileNav = () => {
                   </SheetClose>
                 );
               })}
+            </div>
+            <div className="mt-[4rem] ">
+              <Footer user={user} />
             </div>
           </div>
         </SheetClose>
