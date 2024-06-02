@@ -3,16 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+import { Form } from "@/components/ui/form";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -22,11 +13,13 @@ import { authSchema } from "@/lib/utils";
 import CustomInput from "./CustomInput";
 import { signin, signup } from "@/lib/actions/user.actions";
 import { useRouter } from "next/navigation";
+import { useToast } from "./ui/use-toast";
 
 const AuthForm = ({ type }: { type: "signin" | "signup" }) => {
   const [user, setuser] = useState();
   const [loading, setLoading] = useState(false);
-  const router = useRouter()
+  const router = useRouter();
+  const { toast } = useToast();
 
   const formSchema = authSchema(type);
 
@@ -44,9 +37,7 @@ const AuthForm = ({ type }: { type: "signin" | "signup" }) => {
       setLoading(true);
       if (type == "signup") {
         const newUser = await signup(data);
-
         setuser(newUser);
-        setLoading(false);
       }
 
       if (type == "signin") {
@@ -54,11 +45,16 @@ const AuthForm = ({ type }: { type: "signin" | "signup" }) => {
           email: data.email,
           password: data.password,
         });
-        if(response) router.push('/')
+        if (response) router.push("/");
       }
-    } catch (error) {
+    } catch (error: any) {
       console.log(error);
-      
+      toast({
+        title: "An Error Occured",
+        description: error?.message,
+      });
+    } finally {
+      setLoading(false);
     }
   }
 

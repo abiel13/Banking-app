@@ -8,12 +8,18 @@ import { ParseStringified } from "../utils";
 export async function signin(userdata: any) {
   try {
     const { account } = await createAdminClient();
-    const user = account.createEmailPasswordSession(
+    const user = await account.createEmailPasswordSession(
       userdata.email,
       userdata.password
     );
+    cookies().set("appwrite-session", user.secret, {
+      path: "/",
+      httpOnly: true,
+      sameSite: "strict",
+      secure: true,
+    });
 
-    return user;
+    return ParseStringified(user);
   } catch (error) {
     console.log(error);
   }
