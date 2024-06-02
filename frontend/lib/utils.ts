@@ -36,3 +36,10 @@ export const authSchema = (type: "signin" | "signup") =>
 
 export const ParseStringified = (value: any) =>
   JSON.parse(JSON.stringify(value));
+
+
+
+
+  export const encryptId = (value:any) => {
+    return value;
+  }

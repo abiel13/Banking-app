@@ -14,6 +14,7 @@ import CustomInput from "./CustomInput";
 import { signin, signup } from "@/lib/actions/user.actions";
 import { useRouter } from "next/navigation";
 import { useToast } from "./ui/use-toast";
+import PlaidLink from "./PlaidLink";
 
 const AuthForm = ({ type }: { type: "signin" | "signup" }) => {
   const [user, setuser] = useState();
@@ -61,7 +62,7 @@ const AuthForm = ({ type }: { type: "signin" | "signup" }) => {
   return (
     <section className="w-full h-full flex items-center ">
       <div className="flex-1 w-full px-6">
-        <header>
+        <header className="flex w-full items-center flex-col">
           <Link className="flex items-center gap-3" href={"/"}>
             <div className="relative w-[70px] h-[70px] ">
               <Image src={"/logo.png"} alt="logo " fill />
@@ -71,14 +72,16 @@ const AuthForm = ({ type }: { type: "signin" | "signup" }) => {
         </header>{" "}
         <div className="flex flex-col w-full ">
           {user ? (
-            <h1 className="font-bold font-sans">Link Your Account</h1>
+            <h1 className="font-bold font-sans mx-auto">Link Your Account</h1>
           ) : type === "signin" ? (
             <h1 className="font-bold font-sans">Login</h1>
           ) : (
             <h1 className="font-bold ">Register your Account</h1>
           )}
           {user ? (
-            <p className="leading-loose">Link your account to get started</p>
+            <div className="leading-loose flex flex-col gap-3 items-center  my-3">
+              <PlaidLink user={user} variant='primary' />
+            </div>
           ) : (
             <p className="text-muted-foreground">please enter your details</p>
           )}
@@ -187,9 +190,6 @@ const AuthForm = ({ type }: { type: "signin" | "signup" }) => {
             </Link>
           )}
         </div>
-      </div>
-      <div className="flex-1 relative w-full h-full hidden md:block ">
-        <Image className="object-contain" src={"/demo.png"} alt="demo" fill />
       </div>
     </section>
   );

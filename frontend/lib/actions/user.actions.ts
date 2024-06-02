@@ -3,7 +3,15 @@
 import { ID } from "node-appwrite";
 import { createAdminClient, createSessionClient } from "../appwrite";
 import { cookies } from "next/headers";
-import { ParseStringified } from "../utils";
+import { ParseStringified, encryptId } from "../utils";
+import {
+  CountryCode,
+  ProcessorTokenCreateRequest,
+  ProcessorTokenCreateRequestProcessorEnum,
+  Products,
+} from "plaid";
+import { plaidClient } from "../plaid";
+import { revalidatePath } from "next/cache";
 
 export async function signin(userdata: any) {
   try {
@@ -71,5 +79,75 @@ export async function logoutUser() {
     await account.deleteSession("current");
   } catch (error) {
     return null;
+  }
+}
+
+export async function createlLinkToken(user: User) {
+  try {
+    const tokenParams = {
+      user: {
+        client_user_id: user.$id,
+      },
+      client_name: user.name,
+      products: ["auth"] as Products[],
+      language: "en",
+      country_codes: ["US"] as CountryCode[],
+    };
+
+    const response = await plaidClient.linkTokenCreate(tokenParams);
+
+    return ParseStringified(response.data.link_token);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function exchangePublicToken({
+  publicToken,
+  user,
+}: exchangePublicTokenProps) {
+  try {
+    const response = await plaidClient.itemPublicTokenExchange({
+      public_token: publicToken,
+    });
+
+    const accessToken = response.data.access_token;
+    const itemId = response.data.item_id;
+
+    const accountResponse = await plaidClient.accountsGet({
+      access_token: accessToken,
+    });
+
+    const accountData = accountResponse.data.accounts[0];
+
+    const request: ProcessorTokenCreateRequest = {
+      access_token: accessToken,
+      account_id: accountData.account_id,
+      processor: "dwolla" as ProcessorTokenCreateRequestProcessorEnum,
+    };
+
+    const processorTokenResponse = plaidClient.processorTokenCreate(request);
+    const processorToken = (await processorTokenResponse).data.processor_token;
+
+    const fundingSourceUrl = await addFundingSource({
+      dwollaCustomerId: user.dwollaCustomerId,
+      processorToken,
+      bankName: accountData.name,
+    });
+
+    if (!fundingSourceUrl) throw Error;
+
+    await createBankAccount({
+      userId:user.$id,
+      bankId:itemId,
+      accountId:accountData.account_id,
+      accessToken,
+      fundingSourceUrl,
+      sharableId:encryptId(accountData.account_id),
+    })
+
+    revalidatePath('/')
+  } catch (error) { 
+    console.error(error);
   }
 }

@@ -158,11 +158,7 @@ declare type SearchParamProps = {
     totalPages: number;
   }
   
-  declare interface PlaidLinkProps {
-    user: User;
-    variant?: "primary" | "ghost";
-    dwollaCustomerId?: string;
-  }
+  
   
   // declare type User = sdk.Models.Document & {
   //   accountId: string;
@@ -282,10 +278,7 @@ declare type SearchParamProps = {
     userId: string;
   }
   
-  declare interface exchangePublicTokenProps {
-    publicToken: string;
-    user: User;
-  }
+ 
   
   declare interface createBankAccountProps {
     accessToken: string;

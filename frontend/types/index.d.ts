@@ -118,3 +118,15 @@ declare interface FooterProps {
 declare interface MobileNavProps {
   user: User;
 }
+
+
+declare interface PlaidLinkProps {
+  user: User;
+  variant?: "primary" | "ghost";
+  dwollaCustomerId?: string;
+}
+
+declare interface exchangePublicTokenProps {
+  publicToken: string;
+  user: User;
+}
