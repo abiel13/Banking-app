@@ -33,11 +33,24 @@ const AuthForm = ({ type }: { type: "signin" | "signup" }) => {
   });
 
   async function onSubmit(data: z.infer<typeof formSchema>) {
-    // console.log(data);
+  
     try {
       setLoading(true);
       if (type == "signup") {
-        const newUser = await signup(data);
+        const userData = {
+          firstName: data.firstName!,
+          lastName: data.lastName!,
+          address1: data.address!,
+          city: data.city!,
+          state: data.state!,
+          postalCode: data.postalCode!,
+          dateOfBirth: data.dateOfBirth!,
+          ssn: data.ssn!,
+          email: data.email,
+          password: data.password,
+        };
+
+        const newUser = await signup(userData);
         setuser(newUser);
       }
 
@@ -80,7 +93,7 @@ const AuthForm = ({ type }: { type: "signin" | "signup" }) => {
           )}
           {user ? (
             <div className="leading-loose flex flex-col gap-3 items-center  my-3">
-              <PlaidLink user={user} variant='primary' />
+              <PlaidLink user={user} variant="primary" />
             </div>
           ) : (
             <p className="text-muted-foreground">please enter your details</p>
@@ -113,13 +126,23 @@ const AuthForm = ({ type }: { type: "signin" | "signup" }) => {
                         description="input you lastname"
                       />{" "}
                     </div>
-                    <CustomInput
-                      name="address"
-                      control={form.control}
-                      placeholder="1 amari street"
-                      type="text"
-                      description="input youor address"
-                    />{" "}
+                    <div className="flex items-center gap-3">
+                      <CustomInput
+                        name="address"
+                        control={form.control}
+                        placeholder="1 amari street"
+                        type="text"
+                        description="input  address"
+                      />{" "}
+                      <CustomInput
+                        name="city"
+                        control={form.control}
+                        placeholder="Ny"
+                        type="text"
+                        description="input  city"
+                      />{" "}
+                    </div>
+
                     <div className="flex item-center gap-3 w-full">
                       <CustomInput
                         name="dateOfBirth"
