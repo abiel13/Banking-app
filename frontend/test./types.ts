@@ -85,43 +85,7 @@
 //     | "other";
   
 //   declare type Category = "Food and Drink" | "Travel" | "Transfer";
-  
-//   declare type CategoryCount = {
-//     name: string;
-//     count: number;
-//     totalCount: number;
-//   };
-  
-//   declare type Receiver = {
-//     firstName: string;
-//     lastName: string;
-//   };
-  
-//   declare type TransferParams = {
-//     sourceFundingSourceUrl: string;
-//     destinationFundingSourceUrl: string;
-//     amount: string;
-//   };
-  
-//   declare type AddFundingSourceParams = {
-//     dwollaCustomerId: string;
-//     processorToken: string;
-//     bankName: string;
-//   };
-  
-//   declare type NewDwollaCustomerParams = {
-//     firstName: string;
-//     lastName: string;
-//     email: string;
-//     type: string;
-//     address1: string;
-//     city: string;
-//     state: string;
-//     postalCode: string;
-//     dateOfBirth: string;
-//     ssn: string;
-//   };
-  
+
 //   // declare interface CreditCardProps {
 //   //   account: Account;
 //   //   userName: string;
