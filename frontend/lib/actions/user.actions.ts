@@ -1,12 +1,13 @@
 "use server";
 
-import { ID } from "node-appwrite";
+import { ID, Query } from "node-appwrite";
 import { createAdminClient, createSessionClient } from "../appwrite";
 import { cookies } from "next/headers";
 import {
   ParseStringified,
   encryptId,
   extractCustomerIdFromUrl,
+  parseStringify,
 } from "../utils";
 import {
   CountryCode,
@@ -18,25 +19,42 @@ import { plaidClient } from "../plaid";
 import { revalidatePath } from "next/cache";
 import { addFundingSource, createDwollaCustomer } from "./dwolla.actions";
 
+
 const {
   APPWRITE_DATABASE_ID: DATABASE_ID,
   APPWRITE_USER_COLLECTION_ID: USER_COLLECTION,
   APPWRITE_BANK_COLLECTION_ID: BANK_COLLECTION,
 } = process.env;
 
+export const getUserInfo = async ({ userId }: { userId: string }) => {
+  try {
+    const { database } = await createAdminClient();
+
+    const user = await database.listDocuments(DATABASE_ID!, USER_COLLECTION!, [
+      Query.equal("userId", [userId]),
+    ]);
+
+    return parseStringify(user.documents[0]);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export async function signin(userdata: any) {
   try {
     const { account } = await createAdminClient();
-    const user = await account.createEmailPasswordSession(
+    const session = await account.createEmailPasswordSession(
       userdata.email,
       userdata.password
     );
-    cookies().set("appwrite-session", user.secret, {
+    cookies().set("appwrite-session", session.secret, {
       path: "/",
       httpOnly: true,
       sameSite: "strict",
       secure: true,
     });
+
+    const user = getUserInfo({ userId: session.$id });
 
     return ParseStringified(user);
   } catch (error) {
@@ -100,8 +118,11 @@ export async function signup({ password, ...userdata }: SignUpParams) {
 
 export async function getLoggedInUser() {
   try {
-    const { account } = await createSessionClient();
-    return await account.get();
+    const { account  } = await createSessionClient();
+    const result = await account.get();
+
+    const user = await getUserInfo({userId : result.$id});
+    return user;
   } catch (error) {
     return null;
   }
@@ -128,7 +149,7 @@ export async function createlLinkToken(user: User) {
       client_name: `${user.firstName}  ${user.lastName}`,
       products: ["auth"] as Products[],
       language: "en",
-      country_codes: ["US","NG","CA"] as CountryCode[],
+      country_codes: ["US", "NG", "CA"] as CountryCode[],
     };
 
     const response = await plaidClient.linkTokenCreate(tokenParams);
@@ -212,3 +233,31 @@ export async function exchangePublicToken({
     console.error(error);
   }
 }
+
+export const getBanks = async ({ userId }: getBanksProps) => {
+  try {
+    const { database } = await createAdminClient();
+
+    const bank = await database.listDocuments(DATABASE_ID!, BANK_COLLECTION!, [
+      Query.equal("userId", [userId]),
+    ]);
+
+    return parseStringify(bank.documents);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getBank = async ({ documentId }: getBankProps) => {
+  try {
+    const { database } = await createAdminClient();
+
+    const bank = await database.listDocuments(DATABASE_ID!, BANK_COLLECTION!, [
+      Query.equal("$id", [documentId]),
+    ]);
+
+    return parseStringify(bank.documents[0]);
+  } catch (error) {
+    console.log(error);
+  }
+};

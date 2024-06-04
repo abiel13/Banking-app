@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import React from "react";
 import { Separator } from "./ui/separator";
 import { CiLogout } from "react-icons/ci";
@@ -11,11 +11,11 @@ const Footer = ({ user }: FooterProps) => {
       <div className="flex items-center">
         <div className="flex-1 flex gap-2 ">
           <div className="w-[20px] md:w-[40px] h-[20px] md:h-[40px] rounded-full text-blue-950 bg-gray-300 flex items-center justify-center font-bold ">
-            {user?.name[0]}
+            {user.firstName![0]}
           </div>
           <div>
-            <h1 className="text-sm">{user?.name}</h1>
-            <p className='text-sm'>{user?.email}</p>
+            <h1 className="text-sm">{`${user?.firstName}  ${user?.lastName}`}</h1>
+            <p className="text-sm">{user?.email}</p>
           </div>
         </div>
         <div>

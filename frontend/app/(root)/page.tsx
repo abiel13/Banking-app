@@ -1,11 +1,20 @@
 import HeaderBox from "@/components/HeaderBox";
 import RightSidebar from "@/components/RightSidebar";
 import TotalBalanceBox from "@/components/TotalBalanceBox";
+import { getAccounts } from "@/lib/actions/bank.actions";
 import { getLoggedInUser } from "@/lib/actions/user.actions";
 import React from "react";
+import { MdAccountBalance } from "react-icons/md";
 
-const Home = async () => {
- const user = await getLoggedInUser()
+const Home = async ({ searchParams: { id, page } }: SearchParamProps) => {
+  const user = await getLoggedInUser();
+  const accounts = await getAccounts({ userId: user!.$id });
+
+  if (!accounts) return;
+
+  const accountData = accounts?.data;
+
+  const appwriteItemId = (id as string) || accountData[0].appwriteItemId;
 
   return (
     <div className="w-full min-h-screen flex   ">
@@ -15,17 +24,21 @@ const Home = async () => {
             type="greeting"
             title="Welcome"
             subtext="Access and manage your account and  transactions effectively"
-            user={user?.name || "Guest"}
+            user={`${user?.firstName}  ${user?.lastName}` || "Guest"}
           />
-
+ 
           <TotalBalanceBox
-            accounts={[]}
-            totalBanks={1}
-            totalCurrentBalance={2394.33}
+            accounts={accountData}
+            totalBanks={accounts?.totalBanks}
+            totalCurrentBalance={accounts?.totalCurrentBalance}
           />
         </header>
       </div>
-      <RightSidebar user={user} transactions={[]} banks={[{}, {}]}  />
+      <RightSidebar
+        user={user}
+        transactions={accounts?.transactions}
+        banks={accountData.slice(0, 2)}
+      />
     </div>
   );
 };

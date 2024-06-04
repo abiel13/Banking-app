@@ -2,18 +2,18 @@
 declare type User = {
   $id: string; 
   email: string;
-  userId?: string;
-  dwollaCustomerUrl?: string;
-  dwollaCustomerId?: string;
-  firstName?: string;
-  lastName?: string;
+  userId: string;
+  dwollaCustomerUrl: string;
+  dwollaCustomerId: string;
+  firstName: string;
+  lastName: string;
   name: string;
-  address1?: string;
-  city?: string;
-  state?: string;
-  postalCode?: string;
-  dateOfBirth?: string;
-  ssn?: string;
+  address1: string;
+  city: string;
+  state: string;
+  postalCode: string;
+  dateOfBirth: string;
+  ssn: string;
 };
 
 
@@ -98,12 +98,34 @@ declare interface HeaderBoxProps {
   user?: string;
 }
 
-  
+declare type SearchParamProps = {
+    params: { [key: string]: string };
+    searchParams: { [key: string]: string | string[] | undefined };
+  };  
+
 declare interface CreditCardProps {
   account: Account;
   userName: string;
   showBalance?: boolean;
 }
+
+  
+  // Actions
+  declare interface getAccountsProps {
+    userId: string;
+  }
+  
+  declare interface getAccountProps {
+    appwriteItemId: string;
+  }
+  
+  declare interface getInstitutionProps {
+    institutionId: string;
+  }
+  
+  declare interface getTransactionsProps {
+    accessToken: string;
+  }
 
 
 declare interface SiderbarProps {
@@ -145,4 +167,13 @@ declare interface CreateFundingSourceOptions {
   fundingSourceName: string; // Dwolla Funding Source Name
   plaidToken: string; // Plaid Account Processor Token
   _links: object; // Dwolla On Demand Authorization Link
+}
+
+
+declare interface getBanksProps {
+  userId: string;
+}
+
+declare interface getBankProps {
+  documentId: string;
 }

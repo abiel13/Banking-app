@@ -9,13 +9,13 @@ const RightSidebar = ({ user, transactions, banks }: RightSidebarProps) => {
         <div className="flex w-[100px] h-[100px] rounded-full bg-white  items-center justify-center shadow-lg -mt-[10%] ">
           <div className="flex items-center justify-center w-[80px] h-[80px] bg-gray-300 rounded-full">
             <p className="font-bold text-3xl font-sans text-primary">
-              {user?.name[0]}
+              {user.firstName![0]}
             </p>
           </div>
         </div>
 
         <div className="mt-4 flex flex-col gap-1">
-          <p className="font-sans text-xl font-bold">{user?.name}</p>
+          <p className="font-sans text-xl font-bold">{`${user?.firstName}  ${user?.lastName}`}</p>
           <p className="font-sans text-muted-foreground">{user?.email}</p>
         </div>
       </section>
@@ -31,7 +31,7 @@ const RightSidebar = ({ user, transactions, banks }: RightSidebarProps) => {
             <div className="relative z-10 w-full">
               <BankCard
                 account={banks[0]}
-                userName={`${user?.name}`}
+                userName={`${user?.firstName}  ${user?.lastName}`}
                 showBalance={false}
               />
             </div>
@@ -39,7 +39,7 @@ const RightSidebar = ({ user, transactions, banks }: RightSidebarProps) => {
               <div className="absolute top-8 right-0 w-[100%] shadow-lg">
                 <BankCard
                   account={banks[1]}
-                  userName={`${user?.name}`}
+                  userName={`${user?.firstName}  ${user?.lastName}`}
                   showBalance={false}
                 />
               </div>
