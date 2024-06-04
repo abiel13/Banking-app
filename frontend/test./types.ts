@@ -77,26 +77,7 @@
 //   //   shareableId: string;
 //   // };
   
-//   declare type AccountTypes =
-//     | "depository"
-//     | "credit"
-//     | "loan "
-//     | "investment"
-//     | "other";
-  
-//   declare type Category = "Food and Drink" | "Travel" | "Transfer";
 
-//   // declare interface CreditCardProps {
-//   //   account: Account;
-//   //   userName: string;
-//   //   showBalance?: boolean;
-//   // }
-  
-//   declare interface BankInfoProps {
-//     account: Account;
-//     appwriteItemId?: string;
-//     type: "full" | "card";
-//   }
   
 //   declare interface HeaderBoxProps {
 //     type?: "title" | "greeting";
