@@ -215,6 +215,18 @@ declare interface getBankProps {
     ssn: string;
   };
   
+  declare interface RecentTransactionsProps {
+    accounts: Account[];
+    transactions: Transaction[];
+    appwriteItemId: string;
+    page: number;
+  }
+
+  declare interface BankTabItemProps {
+    account: Account;
+    appwriteItemId?: string;
+  }
+  
 
     declare type AccountTypes =
     | "depository"

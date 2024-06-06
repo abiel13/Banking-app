@@ -121,11 +121,7 @@
 //     otherStyles?: string;
 //   }
   
-//   declare interface BankTabItemProps {
-//     account: Account;
-//     appwriteItemId?: string;
-//   }
-  
+
 //   declare interface TotalBalanceBoxProps {
 //     accounts: Account[];
 //     totalBanks: number;
@@ -141,12 +137,7 @@
 //   // }
   
   
-//   declare interface RecentTransactionsProps {
-//     accounts: Account[];
-//     transactions: Transaction[];
-//     appwriteItemId: string;
-//     page: number;
-//   }
+
   
 //   declare interface TransactionHistoryTableProps {
 //     transactions: Transaction[];

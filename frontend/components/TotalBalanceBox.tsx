@@ -11,7 +11,7 @@ const TotalBalanceBox = ({
   return (
     <Card className="px-3 py-4 flex items-center gap-3 mt-[1rem]">
       <div className="flex">
-        <DoughnutChart accounts={[]} />
+        <DoughnutChart accounts={accounts} />
       </div>
       <div>{/* render chart */}</div>
       <div className="flex justify-between flex-1 ">

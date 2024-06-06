@@ -144,10 +144,10 @@ export const ParseStringified = (value: any) =>
     switch (type) {
       case "depository":
         return {
-          bg: "bg-blue-25",
-          lightBg: "bg-blue-100",
-          title: "text-blue-900",
-          subText: "text-blue-700",
+          bg: "bg-green-25",
+          lightBg: "bg-green-100",
+          title: "text-green-900",
+          subText: "text-green-700",
         };
   
       case "credit":

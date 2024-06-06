@@ -1,12 +1,15 @@
 import HeaderBox from "@/components/HeaderBox";
+import RecentTransactions from "@/components/RecentTransactions";
 import RightSidebar from "@/components/RightSidebar";
 import TotalBalanceBox from "@/components/TotalBalanceBox";
 import { getAccounts } from "@/lib/actions/bank.actions";
 import { getLoggedInUser } from "@/lib/actions/user.actions";
 import React from "react";
-import { MdAccountBalance } from "react-icons/md";
 
 const Home = async ({ searchParams: { id, page } }: SearchParamProps) => {
+
+
+  const currentPage = Number(page as string) || 1;
   const user = await getLoggedInUser();
   const accounts = await getAccounts({ userId: user!.$id });
 
@@ -26,13 +29,19 @@ const Home = async ({ searchParams: { id, page } }: SearchParamProps) => {
             subtext="Access and manage your account and  transactions effectively"
             user={`${user?.firstName}  ${user?.lastName}` || "Guest"}
           />
- 
+
           <TotalBalanceBox
             accounts={accountData}
             totalBanks={accounts?.totalBanks}
             totalCurrentBalance={accounts?.totalCurrentBalance}
           />
         </header>
+        <RecentTransactions
+          accounts={accountData}
+          transactions={accounts.transactions}
+          appwriteItemId={appwriteItemId}
+          page={currentPage}
+        />
       </div>
       <RightSidebar
         user={user}

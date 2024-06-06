@@ -73,7 +73,7 @@ const AuthForm = ({ type }: { type: "signin" | "signup" }) => {
   }
 
   return (
-    <section className="w-full h-full flex items-center ">
+    <section className="w-full h-full flex items-center  flex-1">
       <div className="flex-1 w-full px-6">
         <header className="flex w-full items-center flex-col">
           <Link className="flex items-center gap-3" href={"/"}>
