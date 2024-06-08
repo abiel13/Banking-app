@@ -25,9 +25,4 @@ export const Navlinks = [
     label: "Payment Transfer",
     Icon: TbLocationDollar,
   },
-  {
-    route: "/connect-banks",
-    label: "Connect Banks",
-    Icon: MdOutlineAddCard,
-  },
 ];
