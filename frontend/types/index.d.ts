@@ -227,7 +227,15 @@ declare interface getBankProps {
     appwriteItemId?: string;
   }
   
-
+  
+  declare interface TransactionHistoryTableProps {
+    transactions: Transaction[];
+    page: number;
+  }
+  declare interface TransactionTableProps {
+    transactions: Transaction[];
+  }
+  
     declare type AccountTypes =
     | "depository"
     | "credit"
@@ -237,14 +245,113 @@ declare interface getBankProps {
   
   declare type Category = "Food and Drink" | "Travel" | "Transfer";
 
-  // declare interface CreditCardProps {
-  //   account: Account;
-  //   userName: string;
-  //   showBalance?: boolean;
-  // }
+  declare interface CreditCardProps {
+    account: Account;
+    userName: string;
+    showBalance?: boolean;
+  }
   
   declare interface BankInfoProps {
     account: Account;
     appwriteItemId?: string;
     type: "full" | "card";
+  }
+
+ 
+  
+  declare type LoginUser = {
+    email: string;
+    password: string;
+  };
+  
+
+  
+  declare type NewUserParams = {
+    userId: string;
+    email: string;
+    name: string;
+    password: string;
+  };
+  
+
+  
+  declare interface HeaderBoxProps {
+    type?: "title" | "greeting";
+    title: string;
+    subtext: string;
+    user?: string;
+  }
+  
+ 
+  declare interface PageHeaderProps {
+    topTitle: string;
+    bottomTitle: string;
+    topDescription: string;
+    bottomDescription: string;
+    connectBank?: boolean;
+  }
+  
+  declare interface PaginationProps {
+    page: number;
+    totalPages: number;
+  }
+  
+  
+  
+
+  
+  declare interface AuthFormProps {
+    type: "sign-in" | "sign-up";
+  }
+  
+  declare interface BankDropdownProps {
+    accounts: Account[];
+    otherStyles?: string;
+  }
+  
+
+  declare interface TotalBalanceBoxProps {
+    accounts: Account[];
+    totalBanks: number;
+    totalCurrentBalance: number;
+  } 
+
+
+  
+  declare interface CategoryBadgeProps {
+    category: string;
+  }
+  
+
+  declare interface CategoryProps {
+    category: CategoryCount;
+  }
+  
+  declare interface DoughnutChartProps {
+    accounts: Account[];
+  }
+  
+  declare interface PaymentTransferFormProps {
+    accounts: Account[];
+  }
+
+  
+ 
+  declare interface CreateTransactionProps {
+    name: string;
+    amount: string;
+    senderId: string;
+    senderBankId: string;
+    receiverId: string;
+    receiverBankId: string;
+    email: string;
+  }
+  
+  declare interface getTransactionsByBankIdProps {
+    bankId: string;
+  }
+  
+  
+  declare interface getBankByAccountIdProps {
+    accountId: string;
   }
