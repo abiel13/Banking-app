@@ -11,10 +11,11 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { authSchema } from "@/lib/utils";
 import CustomInput from "./CustomInput";
-import { signin, signup } from "@/lib/actions/user.actions";
+import { signIn, signUp } from "@/lib/actions/user.actions";
 import { useRouter } from "next/navigation";
 import { useToast } from "./ui/use-toast";
 import PlaidLink from "./PlaidLink";
+import { AppwriteException } from "node-appwrite";
 
 const AuthForm = ({ type }: { type: "signin" | "signup" }) => {
   const [user, setuser] = useState();
@@ -33,7 +34,6 @@ const AuthForm = ({ type }: { type: "signin" | "signup" }) => {
   });
 
   async function onSubmit(data: z.infer<typeof formSchema>) {
-  
     try {
       setLoading(true);
       if (type == "signup") {
@@ -50,18 +50,19 @@ const AuthForm = ({ type }: { type: "signin" | "signup" }) => {
           password: data.password,
         };
 
-        const newUser = await signup(userData);
+        const newUser = await signUp(userData);
         setuser(newUser);
       }
 
       if (type == "signin") {
-        const response = await signin({
+        const response = await signIn({
           email: data.email,
           password: data.password,
         });
         if (response) router.push("/");
       }
     } catch (error: any) {
+  
       console.log(error);
       toast({
         title: "An Error Occured",
