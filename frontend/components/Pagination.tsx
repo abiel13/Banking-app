@@ -32,7 +32,7 @@ export const Pagination = ({ page, totalPages }: PaginationProps) => {
         disabled={Number(page) <= 1}
       >
         <Image
-          src="/icons/arrow-left.svg"
+          src="/arrow-left.svg"
           alt="arrow"
           width={20}
           height={20}
@@ -52,7 +52,7 @@ export const Pagination = ({ page, totalPages }: PaginationProps) => {
       >
         Next
         <Image
-          src="/icons/arrow-left.svg"
+          src="/arrow-left.svg"
           alt="arrow"
           width={20}
           height={20}

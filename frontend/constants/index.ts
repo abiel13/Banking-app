@@ -33,7 +33,7 @@
         bg: "bg-blue-100",
         indicator: "bg-blue-700",
       },
-      icon: "/icons/monitor.svg",
+      icon: "/monitor.svg",
     },
     Travel: {
       bg: "bg-success-25",
@@ -46,7 +46,7 @@
         bg: "bg-success-100",
         indicator: "bg-success-700",
       },
-      icon: "/icons/coins.svg",
+      icon: "/coins.svg",
     },
     default: {
       bg: "bg-pink-25",
@@ -59,7 +59,7 @@
         bg: "bg-pink-100",
         indicator: "bg-pink-700",
       },
-      icon: "/icons/shopping-bag.svg",
+      icon: "/shopping-bag.svg",
     },
   };
   
